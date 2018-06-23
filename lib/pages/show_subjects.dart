@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/ui/subject_button.dart';
+import 'four_option_question.dart';
 
 
 class SubjectShow extends StatelessWidget{
@@ -11,10 +12,17 @@ class SubjectShow extends StatelessWidget{
         child: new ListView(
           
           children: <Widget>[
-            new SubjectButton(Colors.redAccent, "Science",()=>{}),
-            new SubjectButton(Colors.pinkAccent, "History",()=>{}),
-            new SubjectButton(Colors.orangeAccent, "Geography",()=>{}),
-            new SubjectButton(Colors.greenAccent, "Computer Science",()=>{}),
+            new SubjectButton(Colors.redAccent, "Science",()=>Navigator.of(context).
+            push(new MaterialPageRoute(builder: (BuildContext build) => new FourQuestion()))),
+
+            new SubjectButton(Colors.pinkAccent, "History",()=>Navigator.of(context).
+            push(new MaterialPageRoute(builder: (BuildContext build) => new FourQuestion()))),
+
+            new SubjectButton(Colors.orangeAccent, "Geography",()=>Navigator.of(context).
+            push(new MaterialPageRoute(builder: (BuildContext build) => new FourQuestion()))),
+            
+            new SubjectButton(Colors.greenAccent, "Computer Science",()=>Navigator.of(context).
+            push(new MaterialPageRoute(builder: (BuildContext build) => new FourQuestion()))),
           ],
         ),
       );

@@ -17,7 +17,7 @@ class SubjectButton extends StatelessWidget{
           margin: new EdgeInsets.all(10.0),
           shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.all(new Radius.circular(8.0),),),
           child: new InkWell(
-            onTap: ()=>onTap,
+            onTap: ()=>onTap(),
             child:new Container(
               height: 150.0,
               child:new Stack(
