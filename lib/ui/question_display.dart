@@ -24,7 +24,7 @@ class QuestionDisplayPage extends State<QuestionDisplay> with SingleTickerProvid
   void initState(){
     super.initState();
     animationController=new AnimationController(vsync: this,duration: new Duration(milliseconds: 500));
-    animation=new CurvedAnimation(parent: animationController,curve: Curves.bounceInOut);
+    animation=new CurvedAnimation(parent: animationController,curve: Curves.linear);
     animationController.addListener(()=> this.setState(() {} ));
     animationController.forward();
   }

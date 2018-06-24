@@ -27,7 +27,7 @@ class SubjectShow extends StatelessWidget{
 
             new SubjectButton(Colors.orangeAccent, "Geography",(){ gotoFourQuestion(22, context); }),
             
-            new SubjectButton(Colors.greenAccent, "Computer Science",(){ gotoFourQuestion(18, context);}),
+            new SubjectButton(Color.fromRGBO(87, 96, 111, 1.0), "Computer Science",(){ gotoFourQuestion(18, context);}),
           ],
         ),
       );

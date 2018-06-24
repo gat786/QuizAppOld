@@ -7,7 +7,7 @@ class LandingPage extends StatelessWidget{
   @override
     Widget build(BuildContext context) {
       return new Material(
-        color: Colors.greenAccent,
+        color: Colors.red,
           child: new InkWell(
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,

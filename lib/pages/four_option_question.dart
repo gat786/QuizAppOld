@@ -146,7 +146,7 @@ class FourQuestionState extends State<FourQuestion> {
 
     void handleAnswer(String userAnswer){
       counter=counter+1;
-      result=(userAnswer==currentQuestion.answer)?true:false;
+      result=(userAnswer==unescape.convert( currentQuestion.answer.toString()))?true:false;
       model.answer(result);
       this.setState(()
       {
