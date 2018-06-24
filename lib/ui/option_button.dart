@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 
 class OptionButton extends StatelessWidget{
   final String textString;
@@ -9,7 +10,12 @@ class OptionButton extends StatelessWidget{
 
   @override
     Widget build(BuildContext context) {
-      
+      String newString;
+      newString=textString.toString();
+      if (newString.length>15){
+        var list=newString.split(' ');
+        newString=list.join("\n");
+      }
       // TODO: implement build
       return Material(
         color: backColor,
@@ -21,7 +27,7 @@ class OptionButton extends StatelessWidget{
               new Center(
                 child:new Padding(
                   padding: new EdgeInsets.all(0.0),
-                  child: new Container(child:new Text(textString,style: new TextStyle(color: Colors.white,fontSize: 30.0,),textAlign: TextAlign.center,),),
+                  child: new Container(child:new Text(newString,style: new TextStyle(color: Colors.white,fontSize: 20.0,),textAlign: TextAlign.center,),),
                 )
               )
             ],

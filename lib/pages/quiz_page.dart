@@ -88,7 +88,7 @@ String questionText;
             else{
               Navigator.of(context).push(new MaterialPageRoute(builder:( BuildContext context)=>new ScorePage(quiz.score, quiz.lengthQuestions),));
             }
-          }):new Container(),  
+          },result.toString()):new Container(),  
           ],
         );
       }

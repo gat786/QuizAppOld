@@ -4,7 +4,8 @@ import 'dart:math';
 class CorrectWrongOverlay extends StatefulWidget{
   final bool isTrue;
   final VoidCallback _onTap;
-  CorrectWrongOverlay(this.isTrue,this._onTap);
+  final String correctAnswer;
+  CorrectWrongOverlay(this.isTrue,this._onTap,this.correctAnswer);
   
   
 
@@ -57,6 +58,10 @@ class CorrectWrongOverlayDisplay extends State<CorrectWrongOverlay> with SingleT
                 new Padding(
                   padding: new EdgeInsets.all(20.0),
                   child:new Text((widget.isTrue) ? "Correct!" : "Wrong!",style: new TextStyle(color: Colors.white,fontSize: 20.0) ,),
+                ),
+                new Padding(
+                  padding: new EdgeInsets.all(10.0),
+                  child:new Text((widget.isTrue) ? "" : "Correct Answer is \n"+widget.correctAnswer ,style: new TextStyle(color: Colors.red,fontSize: 20.0),textAlign: TextAlign.center,),
                 )
                 
               ],
