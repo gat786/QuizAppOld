@@ -6,7 +6,7 @@ import 'package:html_unescape/html_unescape.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/ui/option_button.dart';
 import 'package:quiz/ui/question_display.dart';
-import 'package:quiz/ui/correct_wrong_overlay.dart';
+import 'package:quiz/ui/correct_wrong_overlay_multiple.dart';
 import 'package:quiz/util/question_model.dart';
 import 'package:quiz/util/quiz_for_multiple.dart';
 import 'score_page.dart';
@@ -133,9 +133,6 @@ class FourQuestionState extends State<FourQuestion> {
 
   @override
     Widget build(BuildContext context) {
-      String first="https://opentdb.com/api.php?amount=10&category=";
-      String second="&difficulty=easy&type=multiple";
-      //getData(first+widget.category.toString()+second);
       
 
       // TODO: implement build
@@ -171,7 +168,7 @@ class FourQuestionState extends State<FourQuestion> {
                     ),
                 ],
               ),
-              (overlayVisible)?new CorrectWrongOverlay(result, 
+              (overlayVisible)?new CorrectWrongOverlayMultiple(result, 
               (){
                 if (counter<model.lengthQuestions){
                   currentQuestion=model.nextQuestion;
@@ -191,7 +188,7 @@ class FourQuestionState extends State<FourQuestion> {
                   this.setState((){overlayVisible=false;});
                 }
                 else{
-                  Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext build)=>new ScorePage(model.score,model.lengthQuestions)));
+                  Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext build)=>new ScorePage(model.score,model.lengthQuestions)));
                 }
               }, unescape.convert(answer.toString())
               ):new Container(),

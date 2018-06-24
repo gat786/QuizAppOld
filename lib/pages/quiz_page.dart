@@ -86,9 +86,9 @@ String questionText;
           });
             }
             else{
-              Navigator.of(context).push(new MaterialPageRoute(builder:( BuildContext context)=>new ScorePage(quiz.score, quiz.lengthQuestions),));
+              Navigator.of(context).pushReplacement(new MaterialPageRoute(builder:( BuildContext context)=>new ScorePage(quiz.score, quiz.lengthQuestions),));
             }
-          },result.toString()):new Container(),  
+          }):new Container(),  
           ],
         );
       }

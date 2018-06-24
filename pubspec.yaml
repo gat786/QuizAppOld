@@ -6,6 +6,8 @@ dependencies:
     sdk: flutter
   http: "^0.11.3+16"
   html_unescape: "^1.0.0"
+  firebase_database: "^1.0.1"
+  sqflite: "^0.11.0"
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

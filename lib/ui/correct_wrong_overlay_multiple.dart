@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-class CorrectWrongOverlay extends StatefulWidget{
+class CorrectWrongOverlayMultiple extends StatefulWidget{
   final bool isTrue;
   final VoidCallback _onTap;
-  CorrectWrongOverlay(this.isTrue,this._onTap);
+  final String correctAnswer;
+  CorrectWrongOverlayMultiple(this.isTrue,this._onTap,this.correctAnswer);
   
   
 
   @override
     State<StatefulWidget> createState() {
       // TODO: implement createState
-      return CorrectWrongOverlayDisplay();
+      return CorrectWrongOverlayMultipleDisplay();
     }
 }
 
-class CorrectWrongOverlayDisplay extends State<CorrectWrongOverlay> with SingleTickerProviderStateMixin{
+class CorrectWrongOverlayMultipleDisplay extends State<CorrectWrongOverlayMultiple> with SingleTickerProviderStateMixin{
 
   Animation<double> animation;
   AnimationController animationController;
@@ -58,6 +59,11 @@ class CorrectWrongOverlayDisplay extends State<CorrectWrongOverlay> with SingleT
                   padding: new EdgeInsets.all(20.0),
                   child:new Text((widget.isTrue) ? "Correct!" : "Wrong!",style: new TextStyle(color: Colors.white,fontSize: 20.0) ,),
                 ),
+                new Padding(
+                  padding: new EdgeInsets.all(10.0),
+                  child:new Text((widget.isTrue) ? "" : "Correct Answer is \n"+widget.correctAnswer ,style: new TextStyle(color: Colors.red,fontSize: 20.0),textAlign: TextAlign.center,),
+                )
+                
               ],
             ),
             ),
