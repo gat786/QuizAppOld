@@ -39,6 +39,30 @@ class FourQuestionState extends State<FourQuestion> {
     String questionText="Hey I am Question",option1="one",option2="two",option3="three",option4="four",answer="four";
 
 
+      
+  Future<bool> _onWillPop() {
+    return showDialog(
+      context: context,
+      child: new AlertDialog(
+        title: new Text('Are you sure?'),
+        content: new Text('Your Progress will be lost.'),
+        actions: <Widget>[
+          new MaterialButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text('No'),
+          ),
+          new MaterialButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: new Text('Quit'),
+          ),
+        ],
+      ),
+    ) ?? false;
+  }
+
+
+
+
     Map<String,dynamic> data;
     Future<String> getData(String url) async {
     var response = await http.get(
@@ -136,81 +160,81 @@ class FourQuestionState extends State<FourQuestion> {
       
 
       // TODO: implement build
-      return new MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: new Material(
-          child: new Stack(
-            children: <Widget>[
-                  new Column(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
+      return new WillPopScope(
+        onWillPop: _onWillPop,
+        child:new Material(
+            child: new Stack(
+              children: <Widget>[
+                    new Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                        new Expanded(
+                        child: new Row(
+                          children: <Widget>[
+                            new Expanded(child: new OptionButton(option1,(){handleAnswer(option1);},Color.fromRGBO(0, 184, 148, 1.0)),),
+                            
+                            new Expanded(child:new OptionButton(option2,(){handleAnswer(option2);},Colors.orange),),
+                            ],
+                          ),
+                      ),
+                      new Container(
+                        child: new QuestionDisplay(questionText, questionNumber)
+                      ),
                       new Expanded(
-                      child: new Row(
-                        children: <Widget>[
-                          new Expanded(child: new OptionButton(option1,(){handleAnswer(option1);},Color.fromRGBO(0, 184, 148, 1.0)),),
-                          
-                          new Expanded(child:new OptionButton(option2,(){handleAnswer(option2);},Colors.orange),),
+                        child: new Row(
+                          //#74b9ff
+                          children: <Widget>[
+                            new Expanded(child: new OptionButton(option3,(){handleAnswer(option3);},Color.fromRGBO(6, 82, 221, 1.0)),),
+                            
+                            new Expanded(child: new OptionButton(option4,(){handleAnswer(option4);},Color.fromRGBO(255, 118, 117, 1.0)),),
                           ],
                         ),
-                    ),
-                    new Container(
-                      child: new QuestionDisplay(questionText, questionNumber)
-                    ),
-                    new Expanded(
-                      child: new Row(
-                        //#74b9ff
-                        children: <Widget>[
-                          new Expanded(child: new OptionButton(option3,(){handleAnswer(option3);},Color.fromRGBO(6, 82, 221, 1.0)),),
-                          
-                          new Expanded(child: new OptionButton(option4,(){handleAnswer(option4);},Color.fromRGBO(255, 118, 117, 1.0)),),
-                        ],
                       ),
+                  ],
+                ),
+                (overlayVisible)?new CorrectWrongOverlayMultiple(result, 
+                (){
+                  if (counter<model.lengthQuestions){
+                    currentQuestion=model.nextQuestion;
+                    questionText=unescape.convert(currentQuestion.question.toString());
+
+                    option1=unescape.convert(  currentQuestion.option[0].toString());
+
+                    option2=unescape.convert( currentQuestion.option[1].toString());
+
+                    option3=unescape.convert(  currentQuestion.option[2].toString());
+
+                    option4=unescape.convert(  currentQuestion.option[3].toString());
+
+                    answer=unescape.convert( currentQuestion.answer.toString());
+                    answer=currentQuestion.answer;
+                    questionNumber=model.currentQuestionNumber;
+                    this.setState((){overlayVisible=false;});
+                  }
+                  else{
+                    Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext build)=>new ScorePage(model.score,model.lengthQuestions)));
+                  }
+                }, unescape.convert(answer.toString())
+                ):new Container(),
+                (isLoading)?new Container(color: Colors.greenAccent ,
+                child:new Center(
+                  child: new  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                    new Center(
+                    child:new CircularProgressIndicator(),
                     ),
-                ],
-              ),
-              (overlayVisible)?new CorrectWrongOverlayMultiple(result, 
-              (){
-                if (counter<model.lengthQuestions){
-                  currentQuestion=model.nextQuestion;
-                  questionText=unescape.convert(currentQuestion.question.toString());
-
-                  option1=unescape.convert(  currentQuestion.option[0].toString());
-
-                  option2=unescape.convert( currentQuestion.option[1].toString());
-
-                  option3=unescape.convert(  currentQuestion.option[2].toString());
-
-                  option4=unescape.convert(  currentQuestion.option[3].toString());
-
-                  answer=unescape.convert( currentQuestion.answer.toString());
-                  answer=currentQuestion.answer;
-                  questionNumber=model.currentQuestionNumber;
-                  this.setState((){overlayVisible=false;});
-                }
-                else{
-                  Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext build)=>new ScorePage(model.score,model.lengthQuestions)));
-                }
-              }, unescape.convert(answer.toString())
-              ):new Container(),
-              (isLoading)?new Container(color: Colors.greenAccent ,
-              child:new Center(
-                child: new  Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                  new Center(
-                  child:new CircularProgressIndicator(),
-                  ),
-                  new Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child:new Text("Loading...",style: new TextStyle(color: Colors.black,fontSize: 20.0),)
+                    new Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child:new Text("Loading...",style: new TextStyle(color: Colors.black,fontSize: 20.0),)
+                    )
+                  ],),
                   )
-                ],),
-                )
-                )
-              :new Container()
-            ],
-          )
-        ),
+                  )
+                :new Container()
+              ],
+            )
+          ),       
       );
     }
 }

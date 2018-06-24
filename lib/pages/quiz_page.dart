@@ -5,6 +5,7 @@ import 'package:quiz/util/question.dart';
 import 'package:quiz/ui/question_display.dart';
 import 'package:quiz/ui/correct_wrong_overlay.dart';
 import 'score_page.dart';
+import 'dart:async';
 
 class Quizpage extends StatefulWidget{
   @override
@@ -21,6 +22,27 @@ class QuizPageState extends State<Quizpage>{
     int questionNumber=1;
     int counter=0;
 
+
+    
+  Future<bool> _onWillPop() {
+    return showDialog(
+      context: context,
+      child: new AlertDialog(
+        title: new Text('Are you sure?'),
+        content: new Text('Your Progress will be lost.'),
+        actions: <Widget>[
+          new MaterialButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text('No'),
+          ),
+          new MaterialButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: new Text('Quit'),
+          ),
+        ],
+      ),
+    ) ?? false;
+  }
 
     Quiz quiz=new Quiz([
       new Question("Pizza is Healthy", false),
@@ -63,7 +85,9 @@ String questionText;
       Widget build(BuildContext context) {
         print("Updating UI "+questionText+questionNumber.toString());
         // TODO: implement build
-        return new Stack(
+        return new WillPopScope(
+          onWillPop: _onWillPop,
+          child: new Stack(
           fit: StackFit.expand,
           children: <Widget>[
             new Column(              
@@ -90,6 +114,7 @@ String questionText;
             }
           }):new Container(),  
           ],
+        ),
         );
       }
 }
