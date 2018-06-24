@@ -195,7 +195,22 @@ class FourQuestionState extends State<FourQuestion> {
                 }
               }, unescape.convert(answer.toString())
               ):new Container(),
-              (isLoading)?new Center(child: new CircularProgressIndicator(),):new Container()
+              (isLoading)?new Container(color: Colors.greenAccent ,
+              child:new Center(
+                child: new  Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                  new Center(
+                  child:new CircularProgressIndicator(),
+                  ),
+                  new Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child:new Text("Loading...",style: new TextStyle(color: Colors.black,fontSize: 20.0),)
+                  )
+                ],),
+                )
+                )
+              :new Container()
             ],
           )
         ),
