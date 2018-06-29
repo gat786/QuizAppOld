@@ -158,7 +158,7 @@ class FourQuestionState extends State<FourQuestion> {
   @override
     Widget build(BuildContext context) {
       
-
+      
       // TODO: implement build
       return new WillPopScope(
         onWillPop: _onWillPop,
@@ -226,7 +226,7 @@ class FourQuestionState extends State<FourQuestion> {
                     ),
                     new Padding(
                       padding: EdgeInsets.all(10.0),
-                      child:new Text("Loading...",style: new TextStyle(color: Colors.black,fontSize: 20.0),)
+                      child:new Text("Loading...")
                     )
                   ],),
                   )
