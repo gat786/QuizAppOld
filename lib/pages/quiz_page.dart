@@ -57,7 +57,7 @@ class QuizPageState extends State<Quizpage>{
       List<Question> listQuestions=new List();
       for (var a in results){
         String _question= unescape.convert(  a["question"]);
-        bool _answer=(a["correct_answer"]=="true")?true:false;
+        bool _answer=(unescape.convert( a["correct_answer"])=="True")?true:false;
         Question question=new Question(_question,_answer);
         listQuestions.add(question);
       }
