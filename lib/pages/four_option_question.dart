@@ -209,13 +209,13 @@ class FourQuestionState extends State<FourQuestion> {
                   child: new  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                    new Center(
+                    new Container(
                     child:new CircularProgressIndicator(),
                     ),
-                    new Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child:new Text("Loading...")
-                    )
+                    // new Padding(
+                    //   padding: EdgeInsets.all(10.0),
+                    //   child:new Text("Loading...")
+                    // )
                   ],),
                   )
                   )

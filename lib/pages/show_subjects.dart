@@ -2,11 +2,22 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/ui/subject_button.dart';
 import 'four_option_question.dart';
+import 'quiz_page.dart';
 
 
 class SubjectShow extends StatelessWidget{
+
+  final String questionsType;
+
+  SubjectShow(this.questionsType);
+
+
+
   void gotoFourQuestion(int category,BuildContext context){
+        if (questionsType=="mcq")
           Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext build) => new FourQuestion(category)));
+        else 
+          Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext build) => new Quizpage(category.toString())));
       }
 
 

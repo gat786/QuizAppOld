@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
 import 'package:quiz/util/quiz.dart';
 import 'package:quiz/ui/answer_button.dart';
@@ -6,8 +9,18 @@ import 'package:quiz/ui/question_display.dart';
 import 'package:quiz/ui/correct_wrong_overlay.dart';
 import 'score_page.dart';
 import 'dart:async';
+import 'package:html_unescape/html_unescape.dart';
+
+String urlStart="https://opentdb.com/api.php?amount=10&category=";
+String urlEnd="&type=boolean";
 
 class Quizpage extends StatefulWidget{
+  final String category;
+  String dataUrl;
+  Quizpage(this.category){
+    this.dataUrl=urlStart+category+urlEnd;
+  }
+
   @override
     State<StatefulWidget> createState() {
       // TODO: implement createState
@@ -16,14 +29,55 @@ class Quizpage extends StatefulWidget{
 }
 
 class QuizPageState extends State<Quizpage>{
+    bool isLoading=true;
     bool displayOverlay=false;
     bool result;
     Question currentQuestion;
     int questionNumber=1;
     int counter=0;
+    var unescape=new HtmlUnescape();
 
 
-    
+   Map<String,dynamic> data;
+    Future<String> getData(String url) async {
+    var response = await http.get(
+      Uri.encodeFull(url),
+      headers: {
+        "Accept": "application/json"
+        }
+      );
+      data = json.decode(response.body);
+      print(data);
+      createQuestionsList(data["results"]);
+      
+      return "Success!";
+    }
+
+    createQuestionsList(List<dynamic> results){
+      List<Question> listQuestions=new List();
+      for (var a in results){
+        String _question= unescape.convert(  a["question"]);
+        bool _answer=(a["correct_answer"]=="true")?true:false;
+        Question question=new Question(_question,_answer);
+        listQuestions.add(question);
+      }
+      quiz=new Quiz(listQuestions);
+      changeState();
+    }
+
+
+
+    void changeState(){
+      print("changing State");
+      isLoading=false;
+      currentQuestion=quiz.question;
+      questionText=currentQuestion.question;
+      questionNumber=quiz.currentQuestionNumber;
+      this.setState((){ displayOverlay=false; });
+    }
+
+
+
   Future<bool> _onWillPop() {
     return showDialog(
       context: context,
@@ -56,6 +110,8 @@ class QuizPageState extends State<Quizpage>{
       new Question("Sun is a Planet ", false),
       new Question("Nasa is a Space Organization ", true),
     ]);
+
+
 String questionText;
 @override
   void initState() {
@@ -64,6 +120,8 @@ String questionText;
     currentQuestion=quiz.question;
     questionText=currentQuestion.question;
     questionNumber=quiz.currentQuestionNumber;
+
+    getData(widget.dataUrl);
   }
 
 
@@ -113,6 +171,20 @@ String questionText;
               Navigator.of(context).pushReplacement(new MaterialPageRoute(builder:( BuildContext context)=>new ScorePage(quiz.score, quiz.lengthQuestions),));
             }
           }):new Container(),  
+
+        (isLoading)?new Container(color: Colors.greenAccent ,
+            child:new Center(
+              child: new  Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Container(
+                child:new CircularProgressIndicator(),
+                ),
+              ],),
+              )
+              )
+            :new Container()
+
           ],
         ),
         );

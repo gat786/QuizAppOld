@@ -16,20 +16,22 @@ class AskChoices extends StatelessWidget{
 
   void navigateCorrectly(String choice,BuildContext context,Color background)async{
     print("You clicked choice "+choice);
-    if(choice=="mcq"){
-      bool registered=await isUserRegistered();
-      if(registered)
-        Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)=>new SubjectShow()));  
 
-      Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)=>new AskName(choice,background)));
-    }
-    else if(choice=="truefalse"){
-      bool registered=await isUserRegistered();
-      if(registered)
-        Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)=>new SubjectShow()));  
+     Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)=>new SubjectShow(choice)));  
+    // if(choice=="mcq"){
+    //   //bool registered=await isUserRegistered();
+    //   //if(registered)
+    //     Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)=>new SubjectShow(choice)));  
 
-      Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)=>new AskName(choice,background)));
-    }
+    //  // Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)=>new AskName(choice,background)));
+    // }
+    // else if(choice=="truefalse"){
+    //   //bool registered=await isUserRegistered();
+    //   //if(registered)
+    //     Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)=>new SubjectShow(choice)));  
+
+    //  // Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)=>new AskName(choice,background)));
+    // }
   }
 
 
