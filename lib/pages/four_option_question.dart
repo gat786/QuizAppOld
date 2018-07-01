@@ -105,18 +105,6 @@ class FourQuestionState extends State<FourQuestion> {
       String first="https://opentdb.com/api.php?amount=10&category=";
       String second="&difficulty=easy&type=multiple";
       getData(first+widget.category.toString()+second);
-     /*  try{
-      currentQuestion=model.question;
-      questionText=currentQuestion.question;
-      option1=currentQuestion.option[1];
-      option2=currentQuestion.option[2];
-      option3=currentQuestion.option[3];
-      option4=currentQuestion.option[4];
-      answer=currentQuestion.answer;
-      }
-      catch(Exception){
-
-      } */
     }
     
     void changeState(){

@@ -1,16 +1,34 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:quiz/ui/ask_choices_button.dart';
+import 'package:quiz/util/shared_preference.dart';
+import 'show_subjects.dart';
 import 'ask_name.dart';
 
 class AskChoices extends StatelessWidget{
 
-  void navigateCorrectly(String choice,BuildContext context){
+  Future<bool> isUserRegistered() async {
+    bool existence=false;
+    checkUserExists().then((bool exists){existence=exists;});
+    return existence;
+  }
+
+  void navigateCorrectly(String choice,BuildContext context,Color background)async{
     print("You clicked choice "+choice);
     if(choice=="mcq"){
-      Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)=>new AskName(choice)));
+      bool registered=await isUserRegistered();
+      if(registered)
+        Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)=>new SubjectShow()));  
+
+      Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)=>new AskName(choice,background)));
     }
     else if(choice=="truefalse"){
-      Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)=>new AskName(choice)));
+      bool registered=await isUserRegistered();
+      if(registered)
+        Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)=>new SubjectShow()));  
+
+      Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)=>new AskName(choice,background)));
     }
   }
 
@@ -21,8 +39,8 @@ class AskChoices extends StatelessWidget{
       return new Material(
         child: new Column(
           children: <Widget>[
-            new Expanded(child: new AskChoicesButton("MCQ",Colors.purple,()=>navigateCorrectly("mcq",context)),),
-            new Expanded(child: new AskChoicesButton("True Or False",Colors.blue,()=>navigateCorrectly("truefalse",context)),)
+            new Expanded(child: new AskChoicesButton("MCQ",Colors.purple,()=>navigateCorrectly("mcq",context,Colors.purple)),),
+            new Expanded(child: new AskChoicesButton("True Or False",Colors.blue,()=>navigateCorrectly("truefalse",context,Colors.blue)),)
           ],
         ),
       );
