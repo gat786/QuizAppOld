@@ -1,119 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/util/shared_preference.dart';
 
-class AskName extends StatelessWidget{
-  final String choice;
-  final Color background;
+class AskName extends StatefulWidget{
+  @override
+    State<StatefulWidget> createState() {
+      // TODO: implement createState
+      return AskNameState();
+    }
+}
 
+class AskNameState extends State<AskName>{
 
-  final Color variableColor=Colors.white;
-  final double fontSize=20.0;
+   
 
-  AskName(this.choice,this.background);
-  final nameInput=TextEditingController();
-  final email=TextEditingController();
-  final password=TextEditingController();
-
-  void saveName(String nameToSave) async {
-    print("name is "+nameToSave);
-    saveToPreferences("name",nameToSave);
-  }
-
-  void saveEmail(String nameToSave) async {
-    print("Email is "+nameToSave);
-    saveToPreferences("email",nameToSave);
-  }
 
   @override
     Widget build(BuildContext context) {
       // TODO: implement build
       return new Material(
-        color:background,
-        child:new Center(
-          widthFactor: 50.0,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
+        color: Colors.yellow[100],
+        child: new Container(
+          padding: EdgeInsets.all(20.0),
+          child: new Form(
+            child: new ListView(
+              
+              children: <Widget>[
 
-              new Padding(
-               padding: EdgeInsets.all(0.0),
-               child:  new Container(
-               decoration: new BoxDecoration(
-                  border: Border.all(color: variableColor),
-                  borderRadius: BorderRadius.all(Radius.circular(8.0),)
+                new TextFormField(
+                  decoration: new InputDecoration(
+                    hintText: "Username",
+                    labelText: "Enter Your Username"
+                  ),
                 ),
-                width: 300.0,
-                child: new Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child:  new TextField(
-                    style: new TextStyle(fontSize: fontSize,color: variableColor),
-                    textAlign: TextAlign.center,
-                    decoration: new InputDecoration.collapsed(
-                      hintStyle: new TextStyle(fontSize: fontSize,color: variableColor),
-                      fillColor: Colors.yellow,
-                      hintText: 'Enter Username',),
-                    controller: nameInput,
+
+                new TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: new InputDecoration(
+                    hintText: "Email Address",
+                    labelText: "Enter Your Email Adrress"
+                  ),
+                ),
+
+                new TextFormField(
+                  obscureText: true,
+                  decoration: new InputDecoration(
+                    hintText: "Password",
+                    labelText: "Enter Your Password"
+                  ),
+                ),
+
+                new Container(
+                  margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                  child: new RaisedButton(
+                    padding: EdgeInsets.all(10.0),
+                    child: new Text("Sign Up",style: new TextStyle(color: Colors.white),),
+                    color: Colors.blueAccent,
+                    onPressed: (){},
                   ),
                 )
-              ),
-             ),
-
-
-             new Padding(
-               padding: EdgeInsets.all(10.0),
-               child:  new Container(
-                 decoration: new BoxDecoration(
-                  border: Border.all(color: variableColor),
-                  borderRadius: BorderRadius.all(Radius.circular(8.0),)
-                ),
-                width: 300.0,
-                child: new Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child:  new TextField(
-                    style: new TextStyle(fontSize: fontSize,color: variableColor),
-                    textAlign: TextAlign.center,
-                    decoration: new InputDecoration.collapsed(
-                      hintStyle: new TextStyle(fontSize: fontSize,color: variableColor),
-                      fillColor: Colors.yellow,
-                      hintText: 'Enter Email',),
-                    controller: email,
-                  ),
-                )
-              ),
-             ),
-
-             new Padding(
-               padding: EdgeInsets.all(0.0),
-               child:  new Container(
-                 decoration: new BoxDecoration(
-                  border: Border.all(color: variableColor),
-                  borderRadius: BorderRadius.all(Radius.circular(8.0),)
-                ),
-                width: 300.0,
-                child: new Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child:  new TextField(
-                    obscureText: true,
-                    style: new TextStyle(fontSize: fontSize,color: variableColor),
-                    textAlign: TextAlign.center,
-                    decoration: new InputDecoration.collapsed(
-                      hintStyle: new TextStyle(fontSize: fontSize,color: variableColor),
-                      fillColor: Colors.yellow,
-                      hintText: 'Enter Password',),
-                    controller: password,
-                  ),
-                )
-              ),
-             ),
-
-              new IconButton(icon: new Icon( Icons.save,color:variableColor ,),onPressed: ()
-                {
-                  saveName(nameInput.text);
-                  saveEmail(email.text);
-                }
-              )
-            ],
-          )
+              ],
+            ),
+          ),
         )
       );
     }
