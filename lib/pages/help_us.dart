@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz/util/ensure_focus.dart';
 
 class HelpUs extends StatefulWidget{
   @override
@@ -7,72 +8,122 @@ class HelpUs extends StatefulWidget{
       return HelpUsState();
     }
 }
-
+  FocusNode _question=new FocusNode();
+  FocusNode _answer=new FocusNode();
+  FocusNode _option1=new FocusNode();
+  FocusNode _option2=new FocusNode();
+  FocusNode _option3=new FocusNode();
 class HelpUsState extends State<HelpUs> {
-  @override
-    Widget build(BuildContext context) {
-      // TODO: implement build
-      return new Material(
-        child: new Container(
-          padding: EdgeInsets.all(20.0),
-          color: Colors.yellow[100],
-          child: new Form(
-            child: new ListView(
+
+
+  
+
+  Widget listView=new ListView(
               children: <Widget>[
 
-                  new Padding(
-                    padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-                    child: 
-                    new TextFormField(
+                new DropdownButton<String>(
+                  hint: new Text("Select Subject ",style: new TextStyle(color: Colors.black),),
+                  items: <String>['Science', 'History', 'Geography', 'Computer Science','Films','Mythology','Sports'].map((String value) {
+                    return new DropdownMenuItem<String>(
+                      value: value,
+                      child: new Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (_) {
+                    
+                  },
+                  style: new TextStyle(color: Colors.black),
+                ),
+
+                new EnsureVisibleWhenFocused(
+                  focusNode: _question,
+                  child: new TextFormField(
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
                       decoration: new InputDecoration(
                         hintText: "Question",
+                        hintStyle: new TextStyle(color: Colors.black38),
                         labelText: "Question",
+                        labelStyle: new TextStyle(color: Colors.black),
                       ),
+                      focusNode: _question,
+                      onSaved: (String value){
+
+                      },
                     ),
-                  ),
+                  ), 
                   
-                  
-                  new Padding(
-                    padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-                    child:new TextFormField(
-                      decoration: new InputDecoration(
-                        hintText: "Answer",
-                        labelText: "Answer"
-                      ),
+                new EnsureVisibleWhenFocused(
+                focusNode: _answer,
+                child: new TextFormField(
+                    maxLines: null,
+                    keyboardType: TextInputType.multiline,
+                    decoration: new InputDecoration(
+                      hintText: "Answer",
+                      hintStyle: new TextStyle(color: Colors.black38),
+                      labelText: "Answer",
+                      labelStyle: new TextStyle(color: Colors.black),
                     ),
+                    focusNode: _answer,
+                    onSaved: (String value){
+
+                    },
                   ),
-                  
-                  new Padding(
-                    padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-                    child:new TextFormField(
+                ), 
+
+
+                new EnsureVisibleWhenFocused(
+                  focusNode: _option1,
+                  child: new TextFormField(
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
                       decoration: new InputDecoration(
-                        hintText: "Option 1",
-                        labelText: "Option 1"
+                        hintText: "First Option",
+                        hintStyle: new TextStyle(color: Colors.black38),
+                        labelText: "First Option",
+                        labelStyle: new TextStyle(color: Colors.black),
                       ),
+                      focusNode: _option1,
+                      onSaved: (String value){
+
+                      },
                     ),
-                  ),
-                  
-                new Padding(
-                    padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-                    child:new TextFormField(
+                  ), 
+
+
+                new EnsureVisibleWhenFocused(
+                  focusNode: _option2,
+                  child: new TextFormField(
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
                       decoration: new InputDecoration(
-                        hintText: "Option 2",
-                        labelText: "Option 2",
-                        hintStyle: new TextStyle(color: Colors.blueAccent)
-                        
+                        hintText: "Second Option",
+                        hintStyle: new TextStyle(color: Colors.black38),
+                        labelText: "Second Option",
+                        labelStyle: new TextStyle(color: Colors.black),
                       ),
+                      focusNode: _option2,
+                      onSaved: (String value){
+
+                      },
                     ),
-                  ),
-                  
-                  new Padding(
-                    padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-                    child:new TextFormField(
+                  ), 
+
+                new EnsureVisibleWhenFocused(
+                  focusNode: _option3,
+                  child: new TextFormField(
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
                       decoration: new InputDecoration(
-                        hintText: "Option 3",
-                        labelText: "Option 3"
+                        hintText: "Third Option",
+                        hintStyle: new TextStyle(color: Colors.black38),
+                        labelText: "Third Option",
+                        labelStyle: new TextStyle(color: Colors.black),
                       ),
+                      focusNode: _option3,
+                      onSaved: (String value){
+
+                      },
                     ),
                   ),
 
@@ -87,8 +138,21 @@ class HelpUsState extends State<HelpUs> {
                     )
                   )
               ],
-            )
-          ),
+            );
+
+    @override
+    Widget build(BuildContext context) {
+      // TODO: implement build
+      return new Scaffold(
+        body: new Container(
+          height: double.infinity,
+          padding: EdgeInsets.all(20.0),
+          color: Colors.grey[50],
+          child: new Center(
+            child: new Form(
+              child: listView
+            ),
+          )
         )
       );
     }

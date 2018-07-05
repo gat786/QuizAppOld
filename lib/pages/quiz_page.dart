@@ -1,6 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+
+import 'package:path_provider/path_provider.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:audioplayer/audioplayer.dart';
+
 import 'package:flutter/material.dart';
 import 'package:quiz/util/quiz.dart';
 import 'package:quiz/ui/answer_button.dart';
@@ -8,17 +15,42 @@ import 'package:quiz/util/question.dart';
 import 'package:quiz/ui/question_display.dart';
 import 'package:quiz/ui/correct_wrong_overlay.dart';
 import 'score_page.dart';
-import 'dart:async';
 import 'package:html_unescape/html_unescape.dart';
+import 'package:quiz/util/save_audio.dart';
 
 String urlStart="https://opentdb.com/api.php?amount=10&category=";
 String urlEnd="&type=boolean";
+
+
+
+// Future<ByteData> loadAsset1() async {
+//     return await rootBundle.load('sounds/failure.mp3');
+// }
+
+// Future<ByteData> loadAsset2() async {
+//     return await rootBundle.load('sounds/success.mp3');
+// }
+
+// File file,file1;
+
+// void saveFile()async {
+//   file = new File('${(await getApplicationDocumentsDirectory()).path}/failure.mp3');
+//   await file.writeAsBytes((await loadAsset1()).buffer.asUint8List());
+
+//   file1 = new File('${(await getApplicationDocumentsDirectory()).path}/success.mp3');
+//   await file1.writeAsBytes((await loadAsset2()).buffer.asUint8List());
+//   print("File saved");
+// }
+
+
+
 
 class Quizpage extends StatefulWidget{
   final String category;
   String dataUrl;
   Quizpage(this.category){
     this.dataUrl=urlStart+category+urlEnd;
+    saveFile();
   }
 
   @override
@@ -117,6 +149,7 @@ String questionText;
   void initState() {
     // TODO: implement initState
     super.initState();
+    
     currentQuestion=quiz.question;
     questionText=currentQuestion.question;
     questionNumber=quiz.currentQuestionNumber;
@@ -124,6 +157,7 @@ String questionText;
     getData(widget.dataUrl);
   }
 
+ 
 
   void handleAnswer(bool userAnswer){
     counter=counter+1;
@@ -136,6 +170,7 @@ String questionText;
     quiz.answer(result);
     this.setState((){
       displayOverlay=true;
+      playMusic(result);
     });
   }
 
@@ -168,7 +203,7 @@ String questionText;
           });
             }
             else{
-              Navigator.of(context).pushReplacement(new MaterialPageRoute(builder:( BuildContext context)=>new ScorePage(quiz.score, quiz.lengthQuestions),));
+              Navigator.of(context).pushReplacement(new MaterialPageRoute(builder:( BuildContext context)=>new ScorePage(quiz.score, quiz.lengthQuestions,widget.category)));
             }
           }):new Container(),  
 

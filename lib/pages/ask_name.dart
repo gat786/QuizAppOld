@@ -17,7 +17,7 @@ class AskNameState extends State<AskName>{
     Widget build(BuildContext context) {
       // TODO: implement build
       return new Material(
-        color: Colors.yellow[100],
+        color:Colors.grey[50],
         child: new Container(
           padding: EdgeInsets.all(20.0),
           child: new Form(

@@ -27,7 +27,7 @@ class PersonalScoreState extends State<PersonalScore>{
             onCreate: (Database db, int version) async {
           // When creating the db, create the table
           await db.execute(
-              "CREATE TABLE Scores (matchid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, score INTEGER)");
+              "CREATE TABLE Scores (matchid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,category TEXT, score INTEGER)");
         });
 
       List<Map> list=await database.rawQuery("Select * from Scores");

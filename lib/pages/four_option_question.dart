@@ -9,12 +9,15 @@ import 'package:quiz/ui/question_display.dart';
 import 'package:quiz/ui/correct_wrong_overlay_multiple.dart';
 import 'package:quiz/util/question_model.dart';
 import 'package:quiz/util/quiz_for_multiple.dart';
+import 'package:quiz/util/save_audio.dart';
 import 'score_page.dart';
 
 class FourQuestion extends StatefulWidget{
   final int category;
 
-  FourQuestion(this.category);
+  FourQuestion(this.category){
+    saveFile();
+  }
 
   
 
@@ -136,6 +139,7 @@ class FourQuestionState extends State<FourQuestion> {
       counter=counter+1;
       result=(userAnswer==unescape.convert( currentQuestion.answer.toString()))?true:false;
       model.answer(result);
+      playMusic(result);
       this.setState(()
       {
         overlayVisible=true;
@@ -200,7 +204,7 @@ class FourQuestionState extends State<FourQuestion> {
                     this.setState((){overlayVisible=false;});
                   }
                   else{
-                    Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext build)=>new ScorePage(model.score,model.lengthQuestions)));
+                    Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext build)=>new ScorePage(model.score,model.lengthQuestions,widget.category.toString())));
                   }
                 }, unescape.convert(answer.toString())
                 ):new Container(),

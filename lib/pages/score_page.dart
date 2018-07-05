@@ -6,9 +6,10 @@ import 'landing_page.dart';
 class ScorePage extends StatelessWidget{
   final int score;
   final int totalQuestion;
+  final String subject;
   final String username="ganesh";
 
-  ScorePage(this.score,this.totalQuestion);
+  ScorePage(this.score,this.totalQuestion,this.subject);
 
   void databaseTransaction() async {
     //getting path
@@ -18,13 +19,14 @@ class ScorePage extends StatelessWidget{
     Database database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table
+
       await db.execute(
-          "CREATE TABLE Scores (matchid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, score INTEGER)");
+          "CREATE TABLE Scores (matchid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,category TEXT, score INTEGER)");
     });
 
     await database.transaction((txn) async {
       int id1 = await txn.rawInsert(
-          'INSERT INTO Scores ( name, score) VALUES("$username", $score)');
+          'INSERT INTO Scores ( name, category, score) VALUES("$username","$subject", $score)');
       print("inserted: $id1");
     });
 

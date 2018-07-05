@@ -61,7 +61,7 @@ class CorrectWrongOverlayMultipleDisplay extends State<CorrectWrongOverlayMultip
                 ),
                 new Padding(
                   padding: new EdgeInsets.all(10.0),
-                  child:new Text((widget.isTrue) ? "" : "Correct Answer is \n"+widget.correctAnswer ,style: new TextStyle(color: Colors.red,fontSize: 20.0),textAlign: TextAlign.center,),
+                  child:new Text((widget.isTrue) ? "" : "Correct Answer is \n"+widget.correctAnswer ,style: new TextStyle(fontSize: 30.0,color: Colors.white),textAlign: TextAlign.center,),
                 )
                 
               ],

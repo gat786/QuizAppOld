@@ -46,7 +46,6 @@ class LandingPage extends StatelessWidget{
         ),
         floatingActionButton: new FloatingActionButton(
             elevation: 8.0,
-            mini: true,
             notchMargin: 4.0,
             highlightElevation: 10.0,
             shape: const CircleBorder(),
