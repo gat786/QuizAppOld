@@ -3,7 +3,7 @@ import 'package:quiz/ui/options_card.dart';
 import 'personal_scores.dart';
 import 'ask_name.dart';
 import 'help_us.dart';
-
+import 'settings.dart';
 
 class Options extends StatefulWidget{
   @override
@@ -30,7 +30,7 @@ class OptionsState extends State<Options>{
                 new OptionsCard(Icons.settings,"Settings",
                 (){
                   print("You tapped Settings ");
-                  
+                  Navigator.of(context).push(new MaterialPageRoute(builder:(BuildContext context)=>new Settings()));
                   }
                 ),
 
