@@ -7,6 +7,20 @@ Future<bool> saveToPreferences(String key,String value) async {
   return true;
 }
 
+Future<bool> saveSoundPreference(bool value) async {
+  SharedPreferences prefs=await SharedPreferences.getInstance();
+  prefs.setBool("sound", value);
+  print("Sound is "+value.toString());
+  return true;
+}
+
+Future<bool> getSoundPreference() async { 
+  SharedPreferences prefs=await SharedPreferences.getInstance();
+  bool value=prefs.getBool("sound");
+  print("Sound is "+value.toString());
+  return value;
+}
+
 Future<String> getNamePreference()async{
   SharedPreferences prefs=await SharedPreferences.getInstance();
   String name=prefs.getString("name");

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:audioplayer/audioplayer.dart';
+import 'shared_preference.dart';
 
 
 Future<ByteData> loadAsset1() async {
@@ -22,8 +23,12 @@ void saveFile() async {
 
   file1 = new File('${(await getApplicationDocumentsDirectory()).path}/success.mp3');
   await file1.writeAsBytes((await loadAsset2()).buffer.asUint8List());
+  audioPreference=await getSoundPreference();
   print("File saved");
+  print("Preference is "+audioPreference.toString());
 }
+
+bool audioPreference;
 
 var audioPlayer=new AudioPlayer();
 
@@ -36,8 +41,10 @@ void playSuccessMusic() async {
 }
 
  void playMusic(bool result) async {
+   if(audioPreference){
     if (result)
     playSuccessMusic();
     else
     playFailureMusic();
   }
+ }

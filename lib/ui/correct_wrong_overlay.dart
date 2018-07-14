@@ -50,9 +50,9 @@ class CorrectWrongOverlayDisplay extends State<CorrectWrongOverlay> with SingleT
                     shape: BoxShape.circle,
                   ),
                 child:new Padding(
-                  padding: new EdgeInsets.all(20.0),
-                  child:new Icon((widget.isTrue) ? Icons.done : Icons.clear ,size: 50.0,color: Colors.white,),
-                ),
+                    padding: new EdgeInsets.all(20.0),
+                    child:new Icon((widget.isTrue) ? Icons.done : Icons.clear ,size: 50.0,color: Colors.white,),
+                  ),
                 ),
                 new Padding(
                   padding: new EdgeInsets.all(20.0),

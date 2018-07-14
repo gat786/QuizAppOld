@@ -10,9 +10,6 @@ int totalMatches=0;
 
 class PersonalScore extends StatefulWidget{
 
-  PersonalScore(){
-    const List<Widget> scorecards=[];
-  }
   @override
     State<StatefulWidget> createState() {
       // TODO: implement createState
