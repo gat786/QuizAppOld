@@ -12,7 +12,11 @@ class ClippedPath extends StatelessWidget{
                 new ClipPath(
                   child: new Stack(
                     children: <Widget>[
-                      new Container(child: Image.asset('assets/images/clipped.jpg',fit: BoxFit.fitWidth,),width: double.infinity,),
+                      new Container(decoration:new BoxDecoration(
+                        image: new DecorationImage(fit: BoxFit.fill,
+                        image: AssetImage("assets/images/clipped.jpg")
+                        )
+                      ),width: double.infinity,),
                       new Container(color: Colors.black54,)
                     ],
                   ),
