@@ -59,7 +59,14 @@ class SettingsPageState extends State<SettingsPage>{
                     title: new Text("Sound"),
                   ),
                 ),
+              ),
+
+              new Padding(
+                padding: EdgeInsets.fromLTRB(10.0,30.0,10.0,0.0),
+               // child:,
               )
+
+              
 
             ],
           )

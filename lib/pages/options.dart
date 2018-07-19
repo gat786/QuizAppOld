@@ -30,7 +30,8 @@ class OptionsState extends State<Options>{
                 new OptionsCard(Icons.settings,"Settings",
                 (){
                   print("You tapped Settings ");
-                  Navigator.of(context).push(new MaterialPageRoute(builder:(BuildContext context)=>new SettingsPage()));
+                  Navigator.of(context).push(new MaterialPageRoute(builder:(BuildContext context)=>new SettingsPage(),
+                  ));
                   }
                 ),
 
