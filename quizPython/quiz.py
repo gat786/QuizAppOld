@@ -17,6 +17,12 @@ def getDataFromUrl(category, difficulty , amount , typeQuestions):
     data=requests.get(dataUrl).json()
     return data
 
+def getDataFromUrlND(category, amount , typeQuestions):
+    dataUrl=url1+"amount="+amount+"&category="+category+"&type="+typeQuestions
+    print(dataUrl)
+    data=requests.get(dataUrl).json()
+    return data
+
 def parseJsonToList(data,typeData):
     listReturn=[]
     results=data["results"]
@@ -58,18 +64,30 @@ def checkExistence(name,typeData):
 
 def _storeInTable(table_name,data,typeData):
     mycursor=mydb.cursor()
-    mycursor.execute("create table "+table_name+"(question varchar(200), option1 varchar(100), option2 varchar(100),option3 varchar(100),answer varchar(100))")
-    listQuestions=parseJsonToList(data,typeData)
-    for a in listQuestions:
-        question=html.unescape(a["question"])
-        option1=html.unescape( a["option1"])
-        option2=html.unescape( a["option2"])
-        option3=html.unescape( a["option3"])
-        answer=html.unescape(a["answer"])
-        val=[question,option1,option2,option3,answer]
-        query="insert into "+table_name+" (question,option1,option2,option3,answer) values (%s,%s,%s,%s,%s);"
-        mycursor.execute(query,val)
-    mydb.commit()
+
+    if typeData=="multiple":
+        mycursor.execute("create table "+table_name+"(question varchar(200), option1 varchar(100), option2 varchar(100),option3 varchar(100),answer varchar(100))")
+        listQuestions=parseJsonToList(data,typeData)
+        for a in listQuestions:
+            question=html.unescape(a["question"])
+            option1=html.unescape( a["option1"])
+            option2=html.unescape( a["option2"])
+            option3=html.unescape( a["option3"])
+            answer=html.unescape(a["answer"])
+            val=[question,option1,option2,option3,answer]
+            query="insert into "+table_name+" (question,option1,option2,option3,answer) values (%s,%s,%s,%s,%s);"
+            mycursor.execute(query,val)
+        mydb.commit()
+    else:
+        mycursor.execute("create table "+table_name+"(question varchar(200) , answer varchar(100))")
+        listQuestions=parseJsonToList(data,typeData)
+        for a in listQuestions:
+            question=html.unescape(a["question"])
+            answer=html.unescape(a["answer"])
+            val=[question,answer]
+            query="insert into "+table_name+" (question,answer) values (%s,%s);"
+            mycursor.execute(query,val)
+        mydb.commit()
     print("records inserted")
 
 def saveDataToDatabase(data,database_name,table_name,typeData):
@@ -92,6 +110,8 @@ def saveDataToDatabase(data,database_name,table_name,typeData):
         mycursor.execute("create database "+database_name)
         #new table creating and saving data
         _storeInTable(table_name,data,typeData)
+
+
 
 
 
@@ -124,27 +144,12 @@ def saveMultiple():
 
 def saveBoolean():
     typeData="boolean"
-    saveDataToDatabase(getDataFromUrl("17","easy","43",typeData),"trivia_db","science_easy"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("22","easy","50",typeData),"trivia_db","geography_easy"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("23","easy","35",typeData),"trivia_db","history_easy"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("20","easy","12",typeData),"trivia_db","mythology_easy"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("11","easy","50",typeData),"trivia_db","films_easy"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("21","easy","13",typeData),"trivia_db","sports_easy"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("18","easy","29",typeData),"trivia_db","computers_easy"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrlND("17","31",typeData),"trivia_db","science_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrlND("22","37",typeData),"trivia_db","geography_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrlND("23","37",typeData),"trivia_db","history_"+typeData,typeData)
+    #saveDataToDatabase(getDataFromUrlND("20","12",typeData),"trivia_db","mythology_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrlND("11","26",typeData),"trivia_db","films_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrlND("21","11",typeData),"trivia_db","sports_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrlND("18","32",typeData),"trivia_db","computers_"+typeData,typeData)
 
-
-    saveDataToDatabase(getDataFromUrl("17","medium","50",typeData),"trivia_db","science_medium"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("22","medium","50",typeData),"trivia_db","geography_medium"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("23","medium","50",typeData),"trivia_db","history_medium"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("20","medium","15",typeData),"trivia_db","mythology_medium"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("11","medium","50",typeData),"trivia_db","films_medium"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("21","medium","32",typeData),"trivia_db","sports_medium"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("18","medium","48",typeData),"trivia_db","computers_medium"+typeData,typeData)
-
-    saveDataToDatabase(getDataFromUrl("17","hard","41",typeData),"trivia_db","science_hard"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("22","hard","42",typeData),"trivia_db","geography_hard"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("23","hard","46",typeData),"trivia_db","history_hard"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("20","hard","7",typeData),"trivia_db","mythology_hard"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("11","hard","28",typeData),"trivia_db","films_hard"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("21","hard","9",typeData),"trivia_db","sports_hard"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("18","hard","22",typeData),"trivia_db","computers_hard"+typeData,typeData)
+saveBoolean()
