@@ -17,21 +17,59 @@ class HelpUsState extends State<HelpUs> {
 
 
   
+  
+  var listDrop=new List<DropdownMenuItem<String>>();
+  void createListDrop(){
+    listDrop=[];
+    listDrop.add(new DropdownMenuItem(
+      child: new Text("Science"),
+      value: "science",
+    ));
+    listDrop.add(new DropdownMenuItem(
+      child: new Text("History"),
+      value: "history",
+    ));
+    listDrop.add(new DropdownMenuItem(
+      child: new Text("Mythology"),
+      value: "mythology",
+    ));
+    listDrop.add(new DropdownMenuItem(
+      child: new Text("Geography"),
+      value: "grography",
+    ));
+    listDrop.add(new DropdownMenuItem(
+      child: new Text("Sports"),
+      value: "sports",
+    ));
+    listDrop.add(new DropdownMenuItem(
+      child: new Text("Films"),
+      value: "films",
+    ));
+    listDrop.add(new DropdownMenuItem(
+      child: new Text("Computer Science"),
+      value: "computers",
+    ));     
+  }
+    @override
+    Widget build(BuildContext context) {
 
+    String valueSet=null;
+    createListDrop();  
+      
   Widget listView=new ListView(
               children: <Widget>[
 
                 new DropdownButton<String>(
+                  value: valueSet,
                   hint: new Text("Select Subject ",style: new TextStyle(color: Colors.black),),
-                  items: <String>['Science', 'History', 'Geography', 'Computer Science','Films','Mythology','Sports'].map((String value) {
-                    return new DropdownMenuItem<String>(
-                      value: value,
-                      child: new Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (_) {
-                    
+                  items: listDrop,
+                  
+                  onChanged: (String selectedValue) {
+                    valueSet=selectedValue;
+                    this.setState(() {           
+                                        });
                   },
+                  
                   style: new TextStyle(color: Colors.black),
                 ),
 
@@ -139,9 +177,6 @@ class HelpUsState extends State<HelpUs> {
                   )
               ],
             );
-
-    @override
-    Widget build(BuildContext context) {
       // TODO: implement build
       return new Scaffold(
         body: new Container(

@@ -4,6 +4,7 @@ import 'personal_scores.dart';
 import 'ask_name.dart';
 import 'help_us.dart';
 import 'settings_page.dart';
+import 'login_page.dart';
 
 class Options extends StatefulWidget{
   @override
@@ -46,7 +47,7 @@ class OptionsState extends State<Options>{
                 new OptionsCard(Icons.accessibility,"Leaderboards",
                   (){ 
                       print("You tapped Leaderboards ");
-                      Navigator.of(context).push(new MaterialPageRoute(builder:(BuildContext context)=>new AskName()));
+                      Navigator.of(context).push(new MaterialPageRoute(builder:(BuildContext context)=>new LoginPage()));
                   }
                 ),
 
