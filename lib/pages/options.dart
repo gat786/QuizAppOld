@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz/ui/options_card.dart';
 import 'personal_scores.dart';
 import 'ask_name.dart';
-import 'help_us.dart';
+
 import 'settings_page.dart';
 import 'login_page.dart';
 
@@ -54,7 +54,7 @@ class OptionsState extends State<Options>{
                 new OptionsCard(Icons.help, "Suggest a Question ", 
                 (){
                     print("You clicked to help us");
-                    Navigator.of(context).push(new MaterialPageRoute(builder:(BuildContext context)=>new HelpUs()));
+                    //Navigator.of(context).push(new MaterialPageRoute(builder:(BuildContext context)=>));
                 }
                 )
 

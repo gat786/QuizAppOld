@@ -14,6 +14,8 @@ Future<bool> saveSoundPreference(bool value) async {
   return true;
 }
 
+
+
 Future<bool> getSoundPreference() async { 
   SharedPreferences prefs=await SharedPreferences.getInstance();
   bool value=prefs.getBool("sound");

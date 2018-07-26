@@ -10,7 +10,7 @@ url1="https://opentdb.com/api.php?"
 
 
 
-mydb=mysql.connector.connect(host="localhost",user="ganesh",passwd="123456")
+mydb=mysql.connector.connect(host="sql12.freesqldatabase.com",user="sql12249317",passwd="arhy8vszcp")
 def getDataFromUrl(category, difficulty , amount , typeQuestions):
     dataUrl=url1+"amount="+amount+"&category="+category+"&difficulty="+difficulty+"&type="+typeQuestions
     print(dataUrl)
@@ -114,42 +114,44 @@ def saveDataToDatabase(data,database_name,table_name,typeData):
 
 
 
+dbname="sql12249317"
 
 def saveMultiple():
     typeData="multiple"
-    saveDataToDatabase(getDataFromUrl("17","easy","43",typeData),"trivia_db","science_easy"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("22","easy","50",typeData),"trivia_db","geography_easy"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("23","easy","35",typeData),"trivia_db","history_easy"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("20","easy","12",typeData),"trivia_db","mythology_easy"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("11","easy","50",typeData),"trivia_db","films_easy"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("21","easy","13",typeData),"trivia_db","sports_easy"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("18","easy","29",typeData),"trivia_db","computers_easy"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("17","easy","43",typeData),dbname,"science_easy_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("22","easy","50",typeData),dbname,"geography_easy_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("23","easy","35",typeData),dbname,"history_easy_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("20","easy","12",typeData),dbname,"mythology_easy_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("11","easy","50",typeData),dbname,"films_easy_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("21","easy","13",typeData),dbname,"sports_easy_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("18","easy","29",typeData),dbname,"computers_easy_"+typeData,typeData)
 
 
-    saveDataToDatabase(getDataFromUrl("17","medium","50",typeData),"trivia_db","science_medium"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("22","medium","50",typeData),"trivia_db","geography_medium"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("23","medium","50",typeData),"trivia_db","history_medium"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("20","medium","15",typeData),"trivia_db","mythology_medium"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("11","medium","50",typeData),"trivia_db","films_medium"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("21","medium","32",typeData),"trivia_db","sports_medium"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("18","medium","48",typeData),"trivia_db","computers_medium"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("17","medium","50",typeData),dbname,"science_medium_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("22","medium","50",typeData),dbname,"geography_medium_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("23","medium","50",typeData),dbname,"history_medium_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("20","medium","15",typeData),dbname,"mythology_medium_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("11","medium","50",typeData),dbname,"films_medium_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("21","medium","32",typeData),dbname,"sports_medium_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("18","medium","48",typeData),dbname,"computers_medium_"+typeData,typeData)
 
-    saveDataToDatabase(getDataFromUrl("17","hard","41",typeData),"trivia_db","science_hard"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("22","hard","42",typeData),"trivia_db","geography_hard"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("23","hard","46",typeData),"trivia_db","history_hard"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("20","hard","7",typeData),"trivia_db","mythology_hard"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("11","hard","28",typeData),"trivia_db","films_hard"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("21","hard","9",typeData),"trivia_db","sports_hard"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrl("18","hard","22",typeData),"trivia_db","computers_hard"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("17","hard","41",typeData),dbname,"science_hard_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("22","hard","42",typeData),dbname,"geography_hard_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("23","hard","46",typeData),dbname,"history_hard_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("20","hard","7",typeData),dbname,"mythology_hard_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("11","hard","28",typeData),dbname,"films_hard_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("21","hard","9",typeData),dbname,"sports_hard_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrl("18","hard","22",typeData),dbname,"computers_hard_"+typeData,typeData)
 
 def saveBoolean():
     typeData="boolean"
-    saveDataToDatabase(getDataFromUrlND("17","31",typeData),"trivia_db","science_"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrlND("22","37",typeData),"trivia_db","geography_"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrlND("23","37",typeData),"trivia_db","history_"+typeData,typeData)
-    #saveDataToDatabase(getDataFromUrlND("20","12",typeData),"trivia_db","mythology_"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrlND("11","26",typeData),"trivia_db","films_"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrlND("21","11",typeData),"trivia_db","sports_"+typeData,typeData)
-    saveDataToDatabase(getDataFromUrlND("18","32",typeData),"trivia_db","computers_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrlND("17","31",typeData),dbname,"science_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrlND("22","37",typeData),dbname,"geography_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrlND("23","37",typeData),dbname,"history_"+typeData,typeData)
+    #saveDataToDatabase(getDataFromUrlND("20","12",typeData),dbname,"mythology_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrlND("11","26",typeData),dbname,"films_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrlND("21","11",typeData),dbname,"sports_"+typeData,typeData)
+    saveDataToDatabase(getDataFromUrlND("18","32",typeData),dbname,"computers_"+typeData,typeData)
 
-saveBoolean()
+#saveBoolean()
+saveMultiple()
