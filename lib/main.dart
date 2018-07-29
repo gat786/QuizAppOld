@@ -4,6 +4,7 @@ import './pages/landing_page.dart';
 import 'package:quiz/util/shared_preference.dart';
 import 'package:quiz/util/save_audio.dart';
 
+
 void saveAudioIfPreferenceNull() async
 {
   var saveData=await getSoundPreference();
@@ -18,7 +19,7 @@ void main(){
   
   runApp(new MaterialApp(
     debugShowCheckedModeBanner: false,
-    
+
     home:new LandingPage()
    
   ));

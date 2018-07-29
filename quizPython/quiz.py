@@ -10,7 +10,8 @@ url1="https://opentdb.com/api.php?"
 
 
 
-mydb=mysql.connector.connect(host="sql12.freesqldatabase.com",user="sql12249317",passwd="arhy8vszcp")
+#mydb=mysql.connector.connect(host="sql12.freesqldatabase.com",user="sql12249317",passwd="arhy8vszcp")
+mydb=mysql.connector.connect(host="databases.000webhost.com",user="id5776939_ganesht049",passwd="hotMAIL123@")
 def getDataFromUrl(category, difficulty , amount , typeQuestions):
     dataUrl=url1+"amount="+amount+"&category="+category+"&difficulty="+difficulty+"&type="+typeQuestions
     print(dataUrl)
