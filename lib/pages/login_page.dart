@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../util/ensure_focus.dart';
 import 'ask_name.dart';
+import '../pages/see_leaders.dart';
 
 class LoginPage extends StatelessWidget{
   final FocusNode _name=new FocusNode();
@@ -55,7 +56,9 @@ class LoginPage extends StatelessWidget{
                   padding: EdgeInsets.all(10.0),
                   child: new Text("Sign In",style: new TextStyle(color: Colors.white),),
                   color: Color.fromRGBO(255,127,80, 1.0),
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context)=>new SeeLeaders()));
+                  },
                 ),
               );
 
