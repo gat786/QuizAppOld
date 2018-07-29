@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './pages/landing_page.dart';
+import './pages/see_leaders.dart';
 
 import 'package:quiz/util/shared_preference.dart';
 import 'package:quiz/util/save_audio.dart';
@@ -20,7 +21,7 @@ void main(){
   runApp(new MaterialApp(
     debugShowCheckedModeBanner: false,
 
-    home:new LandingPage()
+    home:new SeeLeaders()
    
   ));
 }
