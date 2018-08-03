@@ -10,13 +10,21 @@ url1="https://opentdb.com/api.php?"
 
 
 
-#mydb=mysql.connector.connect(host="sql12.freesqldatabase.com",user="sql12249317",passwd="arhy8vszcp")
-mydb=mysql.connector.connect(host="databases.000webhost.com",user="id5776939_ganesht049",passwd="hotMAIL123@")
+mydb=mysql.connector.connect(host="sql12.freesqldatabase.com",user="sql12249317",passwd="arhy8vszcp")
+#mydb=mysql.connector.connect(host="databases.000webhost.com",user="id5776939_ganesht049",passwd="hotMAIL123@")
 def getDataFromUrl(category, difficulty , amount , typeQuestions):
     dataUrl=url1+"amount="+amount+"&category="+category+"&difficulty="+difficulty+"&type="+typeQuestions
     print(dataUrl)
     data=requests.get(dataUrl).json()
     return data
+
+def createOtherTables():
+    mycursor=mydb.cursor()
+    mycursor.execute("create table score(username varchar(20), score varchar(10);")
+    mycursor.execute("create table suggestsingle(question varchar(300), answer varchar(10),subject varchar(10);")
+    mycursor.execute("create table suggestmultiple(question varchar(300), option1 varchar(100), option2 varchar(100) , option3 varchar(100) , answer varchar(10) , subject varchar(10);")
+    mycursor.execute("create table users(username varchar(20), email varchar(50) , password varchar(50);")
+
 
 def getDataFromUrlND(category, amount , typeQuestions):
     dataUrl=url1+"amount="+amount+"&category="+category+"&type="+typeQuestions
@@ -155,4 +163,6 @@ def saveBoolean():
     saveDataToDatabase(getDataFromUrlND("18","32",typeData),dbname,"computers_"+typeData,typeData)
 
 #saveBoolean()
-saveMultiple()
+#saveMultiple()
+typeData="boolean"
+saveDataToDatabase(getDataFromUrlND("20","9",typeData),dbname,"mythology_"+typeData,typeData)
