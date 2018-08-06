@@ -28,7 +28,7 @@ Future<String> loginUser(String username,String password)async{
   return response.body;
 }
 
-Future<String> getScore(String username,String score)async{
+Future<String> getScore(String username,int score)async{
   var header=Map<String,String>();
   header["Content-Type"]="application/json";
   var unencoded=new ScoreModel(username, score);

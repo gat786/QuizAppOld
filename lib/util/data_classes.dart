@@ -41,10 +41,24 @@ class UserProfile{
   UserProfile(this.username,this.email,this.password);
 
   UserProfile.withoutEmail(this.username,this.password);
+
+   Map<String, dynamic> toJson() =>
+    {
+      'username': username,
+      'email': email,
+      'password':password
+    };
 }
 
 class ScoreModel{
-  String username,score;
+  String username;
+  int score;
 
   ScoreModel(this.username,this.score);
+
+   Map<String, dynamic> toJson() =>
+    {
+      'username': username,
+      'score': score,
+    };
 }

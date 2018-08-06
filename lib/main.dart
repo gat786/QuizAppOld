@@ -8,23 +8,25 @@ import 'package:quiz/web_service/put_data.dart';
 import 'package:quiz/web_service/authenticate.dart';
 
 
-void saveAudioIfPreferenceNull() async
+void savePreferencesIfNull() async
 {
   var saveData=await getSoundPreference();
     if (saveData==null){
       saveFile();
       saveSoundPreference(true);
     }
-}
 
+  var saveScore=await checkScoreUploaded(0);
+  if (saveScore==null){
+    saveScoreUploaded(0);
+  }
+}
 void tryFunctions(){
-  putDataBoolean("Is Baldr Brother of Thor", "True", "mythology");
-  putDataMultiple("kcjhzehdfs", "jiofshkfh", "jfxhkfhkshe", "kjdhfkuse", "fejhsbd", "fehshkd");
-  //getScore("gat786", "320");
+  loginUser("gat786", "hotMAIL123@");
 }
 
 void main(){
-  saveAudioIfPreferenceNull();
+  savePreferencesIfNull();
   tryFunctions();
   runApp(new MaterialApp(
     debugShowCheckedModeBanner: false,

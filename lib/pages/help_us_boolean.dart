@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/util/ensure_focus.dart';
-
+import 'package:quiz/ui/toggler.dart';
 
 class HelpUsBoolean extends StatefulWidget{
   @override
@@ -78,6 +78,8 @@ class HelpUsBooleanState extends State<HelpUsBoolean>{
             },
           ),
 
+          Toggler(),
+          
           new Padding(
             padding: EdgeInsets.only(top:10.0,bottom: 10.0),
             child: new Center(

@@ -20,7 +20,7 @@ def getDataFromUrl(category, difficulty , amount , typeQuestions):
 
 def createOtherTables():
     mycursor=mydb.cursor()
-    mycursor.execute("create table score(username varchar(20), score varchar(10);")
+    mycursor.execute("create table score(username varchar(20), score int);")
     mycursor.execute("create table suggestsingle(question varchar(300), answer varchar(10),subject varchar(10);")
     mycursor.execute("create table suggestmultiple(question varchar(300), option1 varchar(100), option2 varchar(100) , option3 varchar(100) , answer varchar(10) , subject varchar(10);")
     mycursor.execute("create table users(username varchar(20), email varchar(50) , password varchar(50);")
