@@ -80,7 +80,10 @@ class AskNameState extends State<AskName>{
                   ),
                   validator: (value) {
                     if (value.isEmpty) {
-                      return 'Please enter your email-id';
+                      return 'Please enter your password';
+                    }
+                    else if(value.length<6){
+                      return 'Size of Password must be greater then 6';
                     }
                   },
                 ),
@@ -94,8 +97,8 @@ class AskNameState extends State<AskName>{
                     onPressed: (){
                       if(_formKey.currentState.validate()){
                       saveUserRegistrationDetails(_username.text, _password.text, _email.text);
-                    //Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context)=>new SeeLeaders()));
-                    registerUser(_username.text, _password.text, _email.text);
+                      //Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context)=>new SeeLeaders()));
+                      registerUser(_username.text, _password.text, _email.text);
                       this.setState((){  isLoading=true;});
                     }
                     },

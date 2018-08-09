@@ -11,7 +11,7 @@ class HelpUsBoolean extends StatefulWidget{
 }
 
 class HelpUsBooleanState extends State<HelpUsBoolean>{
-  var _booleanValue=true;
+  var _booleanValue=false;
   var typeDrop=new List<DropdownMenuItem<String>>();
   void createTypeDrop(){
     typeDrop=[];
@@ -23,8 +23,14 @@ class HelpUsBooleanState extends State<HelpUsBoolean>{
     typeDrop.add(new DropdownMenuItem(child: new Text("Mythology"),value: "myth",));
     typeDrop.add(new DropdownMenuItem(child: new Text("Films"),value: "films",));
   }
+
+  TextStyle errorStyle=new TextStyle(color: Colors.red);
+  String errorMessage="";
+  TextEditingController _questionController = new TextEditingController();
   FocusNode _question=new FocusNode();
   String selectedType;
+  String subSelected="";
+  
   @override
   Widget build(BuildContext context) {
     createTypeDrop();
@@ -34,6 +40,7 @@ class HelpUsBooleanState extends State<HelpUsBoolean>{
       onChanged: (String value) {
         print("You selected $value");
         selectedType=value;
+        subSelected=value;
         this.setState((){});
       },
       value: selectedType,
@@ -52,6 +59,7 @@ class HelpUsBooleanState extends State<HelpUsBoolean>{
             child: new EnsureVisibleWhenFocused(
               focusNode: _question,
               child: new TextFormField(
+                controller: _questionController,
                 maxLines: null,
                 keyboardType: TextInputType.multiline,
                 decoration: new InputDecoration(
@@ -68,17 +76,26 @@ class HelpUsBooleanState extends State<HelpUsBoolean>{
             ),
           ),
           
-          new SwitchListTile(
-            value: _booleanValue,
-            title: new Text("Select Whether True or False"),
-            secondary: new Icon(Icons.keyboard_arrow_right),
-            onChanged: (bool value){
-              _booleanValue=value;
-              this.setState((){});
-            },
-          ),
+          // new SwitchListTile(
+          //   value: _booleanValue,
+          //   title: new Text("Select Whether True or False"),
+          //   secondary: new Icon(Icons.keyboard_arrow_right),
+          //   onChanged: (bool value){
+          //     _booleanValue=value;
+          //     this.setState((){});
+          //   },
+          // ),
 
-          Toggler(),
+          Toggler((){
+            _booleanValue=true;
+            print("you pressed true");
+            this.setState((){});
+          },
+          (){
+            _booleanValue=false;
+            print("you pressed false");
+            this.setState((){});
+          }),
           
           new Padding(
             padding: EdgeInsets.only(top:10.0,bottom: 10.0),
@@ -97,9 +114,32 @@ class HelpUsBooleanState extends State<HelpUsBoolean>{
                 child: new Text("Submit Question",style: new TextStyle(color:Colors.white),),
                 onPressed: (){
                   print("You pressed Submit..");
+                  print(selectedType);
+                  if (subSelected.isEmpty)
+                  {
+                    errorMessage="Please Select A Valid Subject";
+                  }
+                  else{
+                    if (_questionController.text=="")
+                    {
+                      errorMessage="Please Enter A Question";
+                    }
+                    else
+                    {
+                      errorMessage="";
+                    }
+                  }
+                  this.setState((){
+
+                  });
+                  // else if(_booleanValue=null){
+                  //   errorMessage="Enter Select True or False";
+                  // }
                 },
               )
-          )
+          ),
+
+          new Text( errorMessage ,style: errorStyle,textAlign: TextAlign.center,)
 
 
         ],

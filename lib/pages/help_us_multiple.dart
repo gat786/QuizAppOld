@@ -8,15 +8,24 @@ class HelpUsMultiple extends StatefulWidget{
     // TODO: implement createState
     return HelpUsMultipleState();
   }
+
+  
 }
+
+
 FocusNode _question=new FocusNode();
 FocusNode _answer=new FocusNode();
 FocusNode _option1=new FocusNode();
 FocusNode _option2=new FocusNode();
 FocusNode _option3=new FocusNode();
 var selectedValue=null;
+String subSelected="";
 class HelpUsMultipleState extends State<HelpUsMultiple> {
-
+  final _formKey = GlobalKey<FormState>();
+  
+  HelpUsMultipleState(){
+    subSelected="";
+  }
 
   var typeDrop=new List<DropdownMenuItem<String>>();
   void createTypeDrop(){
@@ -41,6 +50,7 @@ class HelpUsMultipleState extends State<HelpUsMultiple> {
       onChanged: (String value) {
       print("You selected $value");
       selectedType=value;
+      subSelected=value;
       this.setState((){});
     },
       value: selectedType,
@@ -48,130 +58,172 @@ class HelpUsMultipleState extends State<HelpUsMultiple> {
     // TODO: implement build
     return new Scaffold(
 
-        body:new ListView(
-          children: <Widget>[
+        body:Form(
+            key: _formKey,
+            child: new ListView(
+            children: <Widget>[
 
-            new Container(
-              child: new Center(child: selector,),
-              height: 70.0,
-              color: Colors.greenAccent,
-            ),
+              new Container(
+                child: new Center(child: selector,),
+                height: 70.0,
+                color: Colors.greenAccent,
+              ),
 
-            new Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0),
-              child: new EnsureVisibleWhenFocused(
-                focusNode: _question,
-                child: new TextFormField(
-                  maxLines: null,
-                  keyboardType: TextInputType.multiline,
-                  decoration: new InputDecoration(
-                    hintText: "Question",
-                    hintStyle: new TextStyle(color: Colors.black38),
-                    labelText: "Question",
-                    labelStyle: new TextStyle(color: Colors.black),
-                  ),
+              new Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0),
+                child: new EnsureVisibleWhenFocused(
                   focusNode: _question,
-                  onSaved: (String value){
+                  child: new TextFormField(
+                    maxLines: null,
+                    keyboardType: TextInputType.multiline,
+                    decoration: new InputDecoration(
+                      hintText: "Question",
+                      hintStyle: new TextStyle(color: Colors.black38),
+                      labelText: "Question",
+                      labelStyle: new TextStyle(color: Colors.black),
+                    ),
+                    focusNode: _question,
+                    onSaved: (String value){
 
-                  },
+                    },
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter question';
+                      }
+                    },
+                  ),
                 ),
               ),
-            ),
 
-            new Padding(
-              padding: EdgeInsets.only(left: 20.0,right: 20.0),
-              child: new EnsureVisibleWhenFocused(
-                focusNode: _answer,
+              new Padding(
+                padding: EdgeInsets.only(left: 20.0,right: 20.0),
+                child: new EnsureVisibleWhenFocused(
+                  focusNode: _answer,
+                  child: new TextFormField(
+                    maxLines: null,
+                    keyboardType: TextInputType.multiline,
+                    decoration: new InputDecoration(
+                      hintText: "Answer",
+                      hintStyle: new TextStyle(color: Colors.black38),
+                      labelText: "Answer",
+                      labelStyle: new TextStyle(color: Colors.black),
+                    ),
+                    focusNode: _answer,
+                    onSaved: (String value){
+
+                    },
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter answer';
+                      }
+                    },
+                  ),
+                ),
+              ),
+
+
+              new Padding(
+                padding: EdgeInsets.only(left: 20.0,right: 20.0),
+                child: new EnsureVisibleWhenFocused(
+                focusNode: _option1,
                 child: new TextFormField(
                   maxLines: null,
                   keyboardType: TextInputType.multiline,
                   decoration: new InputDecoration(
-                    hintText: "Answer",
+                    hintText: "First Option",
                     hintStyle: new TextStyle(color: Colors.black38),
-                    labelText: "Answer",
+                    labelText: "First Option",
                     labelStyle: new TextStyle(color: Colors.black),
                   ),
-                  focusNode: _answer,
+                  focusNode: _option1,
                   onSaved: (String value){
 
                   },
-                ),
-              ),
-            ),
-
-
-            new Padding(
-              padding: EdgeInsets.only(left: 20.0,right: 20.0),
-              child: new EnsureVisibleWhenFocused(
-              focusNode: _option1,
-              child: new TextFormField(
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-                decoration: new InputDecoration(
-                  hintText: "First Option",
-                  hintStyle: new TextStyle(color: Colors.black38),
-                  labelText: "First Option",
-                  labelStyle: new TextStyle(color: Colors.black),
-                ),
-                focusNode: _option1,
-                onSaved: (String value){
-
-                },
-              ),
-            ),
-            ),
-
-
-            new Padding(
-              padding: EdgeInsets.only(left: 20.0,right: 20.0),
-              child: new EnsureVisibleWhenFocused(
-              focusNode: _option2,
-              child: new TextFormField(
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-                decoration: new InputDecoration(
-                  hintText: "Second Option",
-                  hintStyle: new TextStyle(color: Colors.black38),
-                  labelText: "Second Option",
-                  labelStyle: new TextStyle(color: Colors.black),
-                ),
-                focusNode: _option2,
-                onSaved: (String value){
-
-                },
-              ),
-            ),),
-
-            new Padding(
-              padding: EdgeInsets.only(left: 20.0,right: 20.0),
-              child: new EnsureVisibleWhenFocused(
-              focusNode: _option3,
-              child: new TextFormField(
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-                decoration: new InputDecoration(
-                  hintText: "Third Option",
-                  hintStyle: new TextStyle(color: Colors.black38),
-                  labelText: "Third Option",
-                  labelStyle: new TextStyle(color: Colors.black),
-                ),
-                focusNode: _option3,
-                onSaved: (String value){
-
-                },
-              ),
-            ),),
-
-            new Padding(
-                padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
-                child: new MaterialButton(
-                  color: Colors.blueAccent,
-                  child: new Text("Submit Question....",style: new TextStyle(color:Colors.white),),
-                  onPressed: (){
-                    print("You pressed Submit..");
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter option 1 ';
+                    }
                   },
-                )
-            )
-          ],
+                  
+                ),
+              ),
+              ),
+
+
+              new Padding(
+                padding: EdgeInsets.only(left: 20.0,right: 20.0),
+                child: new EnsureVisibleWhenFocused(
+                focusNode: _option2,
+                child: new TextFormField(
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  decoration: new InputDecoration(
+                    hintText: "Second Option",
+                    hintStyle: new TextStyle(color: Colors.black38),
+                    labelText: "Second Option",
+                    labelStyle: new TextStyle(color: Colors.black),
+                  ),
+                  focusNode: _option2,
+                  onSaved: (String value){
+
+                  },
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter option 2 ';
+                    }
+                  },
+                ),
+              ),),
+
+              new Padding(
+                padding: EdgeInsets.only(left: 20.0,right: 20.0),
+                child: new EnsureVisibleWhenFocused(
+                focusNode: _option3,
+                child: new TextFormField(
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  decoration: new InputDecoration(
+                    hintText: "Third Option",
+                    hintStyle: new TextStyle(color: Colors.black38),
+                    labelText: "Third Option",
+                    labelStyle: new TextStyle(color: Colors.black),
+                  ),
+                  focusNode: _option3,
+                  onSaved: (String value){
+
+                  },
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter option 3 ';
+                    }
+                  },
+                ),
+              ),),
+
+              Builder(
+                  builder:(BuildContext context){
+                  return new Padding(
+                    padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                    child: new MaterialButton(
+                      color: Colors.blueAccent,
+                      child: new Text("Submit Question....",style: new TextStyle(color:Colors.white),),
+                      onPressed: (){
+                        print("You pressed Submit..");
+                        if (_formKey.currentState.validate()){
+                          print(subSelected);
+                          if (subSelected==""){
+                            Scaffold.of(context).showSnackBar(SnackBar(content: Text("Please Select a Subject"),));
+                          }
+                          else  {
+                            Scaffold.of(context).showSnackBar(SnackBar(content: Text("Successfull"),));
+                          }
+                        }
+                      },
+                    )
+                  );
+                }
+              )
+            ],
+          ),
         )
 
     );
