@@ -25,7 +25,7 @@ Future<bool> getSoundPreference() async {
 
 Future<String> getNamePreference()async{
   SharedPreferences prefs=await SharedPreferences.getInstance();
-  String name=prefs.getString("name");
+  String name=prefs.getString("username");
   return name;
 }
 
@@ -50,6 +50,26 @@ Future<bool> checkScoreUploaded(int score) async {
   return isSaved;
 }
 
+Future<bool> isScoreInit() async {
+  SharedPreferences prefs=await SharedPreferences.getInstance();
+  int score=prefs.getInt("uploadedScore");
+  if (score==null)
+    return false;
+  else
+    return true;
+}
+
+void initScore() async {
+  SharedPreferences prefs=await SharedPreferences.getInstance();
+  prefs.setInt("uploadedScore", 0);
+}
+
+Future<int> getUploadedScore() async {
+  SharedPreferences prefs=await SharedPreferences.getInstance();
+  int score=prefs.getInt("uploadedScore");
+  return score;
+}
+
 Future<bool> saveScoreUploaded(int score) async {
   SharedPreferences prefs=await SharedPreferences.getInstance();
   prefs.setInt("uploadedScore", score);
@@ -70,4 +90,26 @@ Future<bool> saveUserLoginDetails(String name,String password)async{
   prefs.setString("username", name);
   prefs.setString("password", password);
   return true;
+}
+
+Future<Map<String,String>> getUserDetails() async {
+  Map<String,String> details=new Map();
+  SharedPreferences prefs=await SharedPreferences.getInstance();
+  // prefs.getString("username");
+  // prefs.getString("password");
+  details["username"]=prefs.getString("username");
+  details["password"]=prefs.getString("password");
+  return details;
+}
+
+Future<bool> doesUserExist() async {
+  SharedPreferences prefs=await SharedPreferences.getInstance();
+  if (prefs.getString("username").isNotEmpty)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }

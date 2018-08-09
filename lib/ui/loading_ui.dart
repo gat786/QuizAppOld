@@ -4,8 +4,7 @@ class IsLoading extends StatelessWidget{
   @override
     Widget build(BuildContext context) {
       // TODO: implement build
-      return Material(
-        child: Container(
+      return  Container(
           height: double.infinity,
           width: double.infinity,
           color: Colors.black12,
@@ -14,7 +13,6 @@ class IsLoading extends StatelessWidget{
 
             ),
           ),
-        ),
       );
     }
 }

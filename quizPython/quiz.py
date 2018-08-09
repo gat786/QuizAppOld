@@ -10,7 +10,7 @@ url1="https://opentdb.com/api.php?"
 
 
 
-mydb=mysql.connector.connect(host="sql12.freesqldatabase.com",user="sql12249317",passwd="arhy8vszcp")
+mydb=mysql.connector.connect(host="159.89.161.122",user="ganesh",passwd="hotMAIL123@")
 #mydb=mysql.connector.connect(host="databases.000webhost.com",user="id5776939_ganesht049",passwd="hotMAIL123@")
 def getDataFromUrl(category, difficulty , amount , typeQuestions):
     dataUrl=url1+"amount="+amount+"&category="+category+"&difficulty="+difficulty+"&type="+typeQuestions
@@ -20,10 +20,11 @@ def getDataFromUrl(category, difficulty , amount , typeQuestions):
 
 def createOtherTables():
     mycursor=mydb.cursor()
+    mycursor.execute("use trivia_db;")
     mycursor.execute("create table score(username varchar(20), score int);")
-    mycursor.execute("create table suggestsingle(question varchar(300), answer varchar(10),subject varchar(10);")
-    mycursor.execute("create table suggestmultiple(question varchar(300), option1 varchar(100), option2 varchar(100) , option3 varchar(100) , answer varchar(10) , subject varchar(10);")
-    mycursor.execute("create table users(username varchar(20), email varchar(50) , password varchar(50);")
+    mycursor.execute("create table suggestsingle(question varchar(300), answer varchar(10),subject varchar(10));")
+    mycursor.execute("create table suggestmultiple(question varchar(300), option1 varchar(100), option2 varchar(100) , option3 varchar(100) , answer varchar(10) , subject varchar(10));")
+    mycursor.execute("create table users(id int auto_increment , username varchar(20), email varchar(50) , password varchar(50), PRIMARY KEY (id));")
 
 
 def getDataFromUrlND(category, amount , typeQuestions):
@@ -123,7 +124,7 @@ def saveDataToDatabase(data,database_name,table_name,typeData):
 
 
 
-dbname="sql12249317"
+dbname="trivia_db"
 
 def saveMultiple():
     typeData="multiple"
@@ -164,5 +165,6 @@ def saveBoolean():
 
 #saveBoolean()
 #saveMultiple()
-typeData="boolean"
-saveDataToDatabase(getDataFromUrlND("20","9",typeData),dbname,"mythology_"+typeData,typeData)
+#typeData="boolean"
+#saveDataToDatabase(getDataFromUrlND("20","9",typeData),dbname,"mythology_"+typeData,typeData)
+createOtherTables()

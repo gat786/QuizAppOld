@@ -23,7 +23,7 @@ class AskNameState extends State<AskName>{
     void initState() {
       // TODO: implement initState
       super.initState();
-      isLoading=false;
+      
     }
   @override
     Widget build(BuildContext context) {
@@ -98,7 +98,7 @@ class AskNameState extends State<AskName>{
                       if(_formKey.currentState.validate()){
                       saveUserRegistrationDetails(_username.text, _password.text, _email.text);
                       //Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context)=>new SeeLeaders()));
-                      registerUser(_username.text, _password.text, _email.text);
+                      registerUser(_username.text, _email.text, _password.text);
                       this.setState((){  isLoading=true;});
                     }
                     },

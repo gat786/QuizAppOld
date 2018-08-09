@@ -1,4 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+
 import '../util/ensure_focus.dart';
 import 'ask_name.dart';
 import '../pages/see_leaders.dart';
@@ -16,13 +21,78 @@ class LoginPage extends StatefulWidget{
   }
 
 }
+
+Future<int> getScore() async {
+      var totalScore=0;      
+      var databases=await getDatabasesPath();
+      String path=join(databases,"QuizApp.db");
+
+      Database database = await openDatabase(path, version: 1,
+            onCreate: (Database db, int version) async {
+          // When creating the db, create the table
+          await db.execute(
+              "CREATE TABLE Scores (matchid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,category TEXT, score INTEGER)");
+        });
+
+      List<Map> list=await database.rawQuery("Select * from Scores");
+      for(var a in list){
+        totalScore=totalScore+a["score"];
+      }
+
+      print("score is "+totalScore.toString());
+      return totalScore;
+    }
+
 bool isLoading=false;
 class LoginPageState extends State<LoginPage> {
   @override
     void initState() {
       // TODO: implement initState
       super.initState();
-      isLoading=false;
+      isLoading=true;
+      doesUserExist().then((
+        bool exist){ 
+        if (exist){
+          getUserDetails().then((Map userDetails)
+          {
+            loginUser(userDetails["username"].toString(), userDetails["password"].toString()).then((String logged){
+              if (logged=="true"){
+                getNamePreference().then((String userName){
+                  isScoreInit().then((bool isInit){ 
+                    if(isInit)
+                    {
+                      getScore().then((int totalScore){
+                        getUploadedScore().then((int uploadedScore){
+                        print("uploaded Score"+uploadedScore.toString());
+                        int scoreToBeUploaded=totalScore-uploadedScore;
+                        print("score To Be Uploaded "+scoreToBeUploaded.toString());
+                        getScoreFromDatabase(userName,totalScore).then((var data){
+                          this.setState(()
+                            {
+                              isLoading=!exist;
+                            }
+                          );  
+                        });
+                        
+                       });
+                      });
+                      
+                    }
+                    else
+                    {
+                      initScore();
+                    }
+                    }
+                    );
+                });
+              }
+            });
+          }
+          );
+        }
+        } 
+      );
+      
     }
 
     final _formKey = GlobalKey<FormState>();
