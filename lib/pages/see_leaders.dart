@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz/util/score_card_leaders.dart';
 
 class SeeLeaders extends StatelessWidget{
-  var score=20;
+  final score=20;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
