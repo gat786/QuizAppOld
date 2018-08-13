@@ -1,254 +1,143 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:quiz/util/data_classes.dart';
+import 'package:quiz/util/score_card_leaders.dart';
 
-import '../util/ensure_focus.dart';
-import 'ask_name.dart';
-import '../pages/see_leaders.dart';
-import 'package:quiz/web_service/authenticate.dart';
-import '../util/shared_preference.dart';
-import '../ui/loading_ui.dart';
+class SeeLeaders extends StatefulWidget {
+  final score = 20;
+  List<dynamic> data;
 
-class LoginPage extends StatefulWidget{
-  final FocusNode _name=new FocusNode();
-  final FocusNode _password = new FocusNode();
-  
   @override
-  LoginPageState createState() {
-    return new LoginPageState();
+  SeeLeadersState createState() {
+    return new SeeLeadersState(data);
   }
-
 }
 
-Future<int> getScore() async {
-      var totalScore=0;      
-      var databases=await getDatabasesPath();
-      String path=join(databases,"QuizApp.db");
+class SeeLeadersState extends State<SeeLeaders> {
+  final textStyle = new TextStyle(color: Colors.white);
+  final textStylePlayers = new TextStyle(color: Colors.black);
 
-      Database database = await openDatabase(path, version: 1,
-            onCreate: (Database db, int version) async {
-          // When creating the db, create the table
-          await db.execute(
-              "CREATE TABLE Scores (matchid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,category TEXT, score INTEGER)");
-        });
-
-      List<Map> list=await database.rawQuery("Select * from Scores");
-      for(var a in list){
-        totalScore=totalScore+a["score"];
-      }
-
-      print("score is "+totalScore.toString());
-      return totalScore;
-    }
-
-bool isLoading=false;
-class LoginPageState extends State<LoginPage> {
-  @override
-    void initState() {
-      // TODO: implement initState
-      super.initState();
-      isLoading=true;
-      doesUserExist().then((
-        bool exist){ 
-        if (exist){
-          getUserDetails().then((Map userDetails)
-          {
-            loginUser(userDetails["username"].toString(), userDetails["password"].toString()).then((String logged){
-              if (logged=="true"){
-                getNamePreference().then((String userName){
-                  isScoreInit().then((bool isInit){ 
-                    if(isInit)
-                    {
-                      getScore().then((int totalScore){
-                        getUploadedScore().then((int uploadedScore){
-                        print("uploaded Score"+uploadedScore.toString());
-                        int scoreToBeUploaded=totalScore-uploadedScore;
-                        print("score To Be Uploaded "+scoreToBeUploaded.toString());
-                        getScoreFromDatabase(userName,totalScore).then((var data){
-                          this.setState(()
-                            {
-                              isLoading=!exist;
-                            }
-                          );  
-                        });
-                        
-                       });
-                      });
-                      
-                    }
-                    else
-                    {
-                      initScore();
-                    }
-                    }
-                    );
-                });
-              }
-            });
-          }
-          );
-        }
-        } 
-      );
-      
-    }
-
-    final _formKey = GlobalKey<FormState>();
-  @override
-    Widget build(BuildContext context) {
-      // TODO: implement build
-      
-
-      TextEditingController _usernameController=new TextEditingController();
-      TextEditingController _passwordController=new TextEditingController();
-
-      var hintColor=Color.fromRGBO(199, 236, 238, 1.0);
-      var labelColor=Color.fromRGBO(223, 249, 251, 1.0);
-
-      Widget userInput=EnsureVisibleWhenFocused(
-                focusNode: widget._name,
-                child: new TextFormField(
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter your username';
-                    }
-                  },
-                  controller: _usernameController,
-                  maxLines: null,
-                  keyboardType: TextInputType.multiline,
-                  decoration: new InputDecoration(
-                    hintText: "Username",
-                    labelText: "Enter Your Username",
-                    hintStyle: new TextStyle(color: hintColor),
-                    labelStyle: new TextStyle(color: labelColor),
-                  ),
-                  focusNode: widget._name,
-                  onSaved: (String value){
-
-                  },
-                ),
-              );
-
-      Widget passInput= EnsureVisibleWhenFocused(
-                focusNode: widget._password,
-                child: new TextFormField(
-                  obscureText: true,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter your email-id';
-                    }
-                  },
-                  controller: _passwordController,
-                  maxLines: null,
-                  keyboardType: TextInputType.multiline,
-                  decoration: new InputDecoration(
-                    hintText: "Password",
-                    hintStyle: new TextStyle(color: hintColor),
-                    labelText: "Enter Your Password",
-                    labelStyle: new TextStyle(color: labelColor),
-                  ),
-                  focusNode: widget._password,
-                  
-                  onSaved: (String value){
-
-                  },
-                ),
-                
-              );
-
-      Widget buttonSaved= new Container(
-                margin: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
-                child: new RaisedButton(
-                  padding: EdgeInsets.all(10.0),
-                  child: new Text("Sign In",style: new TextStyle(color: Colors.white),),
-                  color: Color.fromRGBO(255,127,80, 1.0),
-                  onPressed: (){
-
-                    if(_formKey.currentState.validate()){
-                      saveUserLoginDetails(_usernameController.text, _passwordController.text);
-                      loginUser(_usernameController.text, _passwordController.text);
-                    //Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context)=>new SeeLeaders()));
-                      this.setState((){  isLoading=true;});
-                    }
-
-                    
-                    
-                  },
-                ),
-              );
-
-      Widget rowHeader=Row(children: <Widget>[
-                new Text("Login",style: new TextStyle(fontSize: 75.0),)
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-              );
-
-      Widget formToFill=new Form(
-            key: _formKey,
-            child: ListView(
-
-              children: <Widget>[
-                userInput,
-                
-                passInput,
-
-                buttonSaved,
-            
-              ],
-            ),
-          );
-      
-      return Stack(
+  Widget returnScoreList(String srNo, String userName, String score,
+      Color givenColor, TextStyle givenTextStyle) {
+    var returnable = Container(
+      child: new Row(
         children: <Widget>[
-          new Container(
-            width: double.infinity,
-              child: new Material(
-              color: Color.fromRGBO(236, 240, 241, 1.0),
-              child: new Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                        new Container(
-                          
-                          padding: EdgeInsets.all(0.0),
-                          child:new Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                            new Card(
-
-                              elevation: 10.0,
-                              
-                              child:  new Container(
-                                
-                                width: 350.0,
-                                height: 400.0,
-                                color: Color.fromRGBO(26, 188, 156, 1.0),
-                                child: new Padding(
-                                  padding: EdgeInsets.fromLTRB(30.0, 70.0, 30.0, 70.0),
-                                  child: formToFill
-                                ),
-                              ),
-                            ),
-
-                            
-                            ],
-                          )
-                        ),
-
-                    new MaterialButton(
-                      child: new Text("Click here to Register",style: new TextStyle(color:Colors.blueAccent),),
-                      onPressed: (){
-                        Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context)=>new AskName()));
-                      },
-                    )
-                ],
-              )
+          Expanded(
+            child: new Text(
+              srNo,
+              style: givenTextStyle,
             ),
+            flex: 1,
           ),
-
-          (isLoading)?IsLoading():new Container()
+          Expanded(
+            child: new Text(
+              userName,
+              style: givenTextStyle,
+            ),
+            flex: 3,
+          ),
+          Expanded(
+            child: new Text(
+              score,
+              style: givenTextStyle,
+            ),
+            flex: 1,
+          )
         ],
-      );
+      ),
+      color: givenColor,
+      height: 30.0,
+      padding: EdgeInsets.only(left: 10.0),
+    );
+    return returnable;
+  }
+
+  var scoresList;
+  var score1,
+      score2,
+      score3,
+      score4,
+      score5,
+      score6,
+      score7,
+      score8,
+      score9,
+      score10;
+
+  List<Widget> score;
+  SeeLeadersState(List<ScoreModel> data) {
+    scoresList =
+        returnScoreList("1", "ganesh", "320", Colors.white, textStylePlayers);
+
+    for (int i = 0; i < 11; i = i + 1) {
+      score[1] = returnScoreList("$i", data[i].username,
+          data[i].score.toString(), Colors.white, textStylePlayers);
     }
+
+    // score1 =
+    //     returnScoreList("1",  data[0].username, data[0].score.toString(), Colors.white, textStylePlayers);
+    // score2 =
+    //     returnScoreList("2",  data[1].username, data[1].score.toString(), Colors.white, textStylePlayers);
+    // score3 =
+    //     returnScoreList("3",  data[2].username, data[2].score.toString(), Colors.white, textStylePlayers);
+    // score4 =
+    //     returnScoreList("4",  data[3].username, data[3].score.toString(), Colors.white, textStylePlayers);
+    // score5 =
+    //     returnScoreList("5",  data[4].username, data[4].score.toString(), Colors.white, textStylePlayers);
+    // score6 =
+    //     returnScoreList("6",  data[5].username, data[5].score.toString(), Colors.white, textStylePlayers);
+    // score7 =
+    //     returnScoreList("7",  data[6].username, data[6].score.toString(), Colors.white, textStylePlayers);
+    // score8 =
+    //     returnScoreList("8",  data[7].username, data[7].score.toString(), Colors.white, textStylePlayers);
+    // score9 =
+    //     returnScoreList("9",  data[8].username, data[8].score.toString(), Colors.white, textStylePlayers);
+    // score10 =
+    //     returnScoreList("10",  data[9].username, data[9].score.toString(), Colors.white, textStylePlayers);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new Scaffold(
+      body: new Material(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            new Container(
+              child: new Material(
+                  child: new Container(
+                      child: Container(
+                          height: 360.0,
+                          child: new ListView(children: <Widget>[
+                            returnScoreList("Sr No", "User Name", "Score",
+                                Colors.blueAccent, textStyle),
+                            score1,
+                            score2,
+                            score3,
+                            score4,
+                            score5,
+                            score6,
+                            score7,
+                            score8,
+                            score9,
+                            score10
+                          ])))),
+            ),
+            new Card(
+                child: new Padding(
+              padding: EdgeInsets.all(
+                20.0,
+              ),
+              child: new Text(
+                "Your Score is ${widget.score}",
+                textAlign: TextAlign.center,
+                style: new TextStyle(fontSize: 16.0),
+              ),
+            ))
+          ],
+        ),
+      ),
+    );
+  }
 }
